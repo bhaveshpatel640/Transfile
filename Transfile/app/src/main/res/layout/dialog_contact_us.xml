@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android = "http://schemas.android.com/apk/res/android"
+              android:layout_width = "match_parent"
+              android:layout_height = "match_parent"
+              android:layout_margin = "16dp"
+              android:orientation = "vertical">
+
+    <TextView
+        android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content"
+        android:layout_gravity = "center_horizontal"
+        android:text =
+            "Sardar Patel Institute of Technology, \nMunshi Nagar,\nAndheri (West).\nMumbai 400048\n"
+        />
+
+    <LinearLayout
+        android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content"
+        android:layout_gravity = "center_horizontal">
+
+
+        <ImageView
+            android:id = "@+id/bhavesh"
+            android:layout_width = "0dp"
+            android:layout_height = "80dp"
+            android:layout_weight = "1"
+            android:adjustViewBounds = "true"
+            android:onClick = "photoClicked"
+            android:scaleType = "fitCenter"
+            android:src = "@drawable/bhavesh" />
+
+        <ImageView
+            android:id = "@+id/piyush"
+            android:layout_width = "0dp"
+            android:layout_height = "80dp"
+            android:layout_weight = "1"
+            android:adjustViewBounds = "true"
+            android:onClick = "photoClicked"
+            android:scaleType = "fitCenter"
+            android:src = "@drawable/piyush"
+            />
+
+        <ImageView
+            android:id = "@+id/suyash"
+            android:layout_width = "0dp"
+            android:layout_height = "80dp"
+            android:layout_weight = "1"
+            android:adjustViewBounds = "true"
+            android:onClick = "photoClicked"
+            android:scaleType = "fitCenter"
+            android:src = "@drawable/suyash"
+            />
+    </LinearLayout>
+</LinearLayout>

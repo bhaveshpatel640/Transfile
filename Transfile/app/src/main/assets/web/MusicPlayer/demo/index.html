@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>APlayer Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../dist/APlayer.min.css">
+</head>
+
+<body>
+
+    <div class="container" style="max-width:500px;">
+        <div id="player" class="aplayer"></div>
+    </div>
+    <script src="../dist/APlayer.min.js"></script>
+    <script>
+        var ap = new APlayer({
+            element: document.getElementById('player'),
+            narrow: false,
+            autoplay: false,
+            showlrc: false,
+            theme: '#ad7a86',
+            music: [
+                {
+                    title: 'Preparation',
+                    author: 'Hans Zimmer/Richard Harvey',
+                    url: 'http://7xq131.com1.z0.glb.clouddn.com/Preparation.mp3',
+                    pic: 'http://7xq131.com1.z0.glb.clouddn.com/Preparation.jpg'
+                },
+                {
+                   title: 'Preparation',
+                    author: 'Hans Zimmer/Richard Harvey',
+                    url: 'http://7xq131.com1.z0.glb.clouddn.com/Preparation.mp3',
+                    pic: 'http://7xq131.com1.z0.glb.clouddn.com/Preparation.jpg'
+                },
+                {
+                   title: 'Preparation',
+                    author: 'Hans Zimmer/Richard Harvey',
+                    url: 'http://7xq131.com1.z0.glb.clouddn.com/Preparation.mp3',
+                    pic: 'http://7xq131.com1.z0.glb.clouddn.com/Preparation.jpg'
+                }
+            ]
+        });
+        ap.init();
+
+    </script>
+</body>
+
+</html>

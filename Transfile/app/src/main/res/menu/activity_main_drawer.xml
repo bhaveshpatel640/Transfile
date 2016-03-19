@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/change_port"
+            android:icon="@android:drawable/ic_menu_manage"
+            android:title="Change Port" />
+        <item
+            android:id="@+id/how_to"
+            android:icon="@android:drawable/ic_menu_help"
+            android:title="How to use" />
+
+
+        <item
+            android:id="@+id/contact_us"
+            android:icon="@android:drawable/ic_menu_call"
+            android:title="Contact Us" />
+
+
+        <item
+            android:id="@+id/share"
+            android:icon="@android:drawable/ic_menu_share"
+            android:title="Share" />
+        <item
+            android:id="@+id/exit"
+            android:icon="@drawable/exit_new"
+            android:title="Exit" />
+
+    </group>
+
+</menu>

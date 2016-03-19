@@ -1,0 +1,138 @@
+PhoneSystemInfo
+	DeviceModel  : "YU5010"
+	BatteryPower : 65
+
+
+	MacAddress : "54:14:73:54:6c:5d"
+
+	PhoneMemorySize : 12709425152
+	PhoneMemoryLeft : 712359936
+
+	IsSdcard : 1
+	SdcardMemorySize : 7928508416
+	SdcardMemoryLeft : 3723489280
+
+	Pictures : 375
+	PictureSize : 1290871594
+
+	Videos : 12
+	VideoSize : 1184901585
+
+	Musics : 486
+	MusicSize : 2379866790
+
+	Documents : 56
+	DocumentSize : 84901585
+
+	Charging
+	Wifi: 1
+}
+
+PhotoFolderList{
+	AlbumID: "MainAlbumID_Default"
+	AlbumName: "My Photo"
+	CanDelete: 1
+	CanDeleteAlbum: 0
+	CanImport: 1
+	Count: 28
+	CoverPath: "/storage/emulated/0/DCIM/Camera/IMG_20160305_210102.jpg"
+	MainAlbum: 1
+	Operator: 0
+}
+PhotoList{
+	CanDelete: true
+	CreateTime: "2016/03/05 21:01:04"
+	Exist: true
+	Height: 2448
+	ID: 198528
+	ModifyTime: "2016/03/05 21:01:04"
+	Path: "/storage/emulated/0/DCIM/Camera/IMG_20160305_210102.jpg"
+	Rotation: 0
+	ShowName: "IMG_20160305_210102.jpg"
+	Size: 5394157
+	Width: 3264
+}
+
+MusicFolderList{
+	AlbumID: "1"
+	AlbumName: "My Music"
+	CanDelete: 1
+	CanDeleteAlbum: 0
+	CanImport: 1
+	Count: 486
+	MainAlbum: 0
+	Operator: 0
+}
+MusicList{
+	Album: "Music"
+	Artist: "Yeh Fitoor Mera"
+	CanDelete: true
+	Duration: 290299
+	Exist: true
+	ID: "197897"
+	Path: "/storage/sdcard1/Music/Yeh Fitoor Mera - Yeh Fitoor Mera.mp3"
+	ShowName: "Yeh Fitoor Mera - Yeh Fitoor Mera.mp3"
+	Size: 7004788
+}
+
+VideoFolderList{
+	AlbumID: "-1739773001"
+	AlbumName: "Camera"
+	CanDelete: 1
+	CanDeleteAlbum: 0
+	CanImport: 1
+	Count: 3
+	CoverPath: "/storage/emulated/0/DCIM/Camera/VID_20160229_163341.mp4"
+	MainAlbum: 0
+	Operator: 0
+}
+VideoList{
+	CanDelete: true
+	CreateTime: "2016/02/29 16:36:10"
+	Duration: 148501
+	Exist: true
+	Height: 0
+	ID: "180806"
+	ModifyTime: "2016/02/29 16:36:09"
+	Path: "/storage/emulated/0/DCIM/Camera/VID_20160229_163341.mp4"
+	ShowName: "VID_20160229_163341.mp4"
+	Size: 368583601
+	Width: 0
+}
+
+DocumentFolderList{
+	AlbumID: "doc"
+	AlbumName: "DOC"
+	CanDelete: 1
+	CanDeleteAlbum: 0
+	CanImport: 1
+	Count: 4
+}
+DocumentList{
+	AlbumID: "doc"
+	CanDelete: true
+	Exist: true
+	ModifyTime: 1447149212
+	Path: "/storage/emulated/0/bhaveshpatel_resume_bce.docx"
+	ShowName: "bhaveshpatel_resume_bce.docx"
+	Size: 16612
+}
+
+PhoneAuthentication
+
+FileFolderList{
+	CanWrite: 1
+	FileType: 2
+	ModifyTime: 1457323571000
+	Path: "/storage/sdcard1"
+	ShowName: "ExtSDCard"
+	Size: 0
+}
+FileList{
+	CanWrite: 1
+	FileType: 1
+	ModifyTime: 1454830990000
+	Path: "/storage/sdcard1/abc"
+	ShowName: "abc"
+	Size: 0
+}

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android = "http://schemas.android.com/apk/res/android"
+              xmlns:app = "http://schemas.android.com/apk/res-auto"
+              xmlns:tools = "http://schemas.android.com/tools"
+              android:layout_width = "match_parent"
+              android:layout_height = "match_parent"
+              android:orientation = "vertical"
+              android:paddingBottom = "@dimen/activity_vertical_margin"
+              android:paddingLeft = "@dimen/activity_horizontal_margin"
+              android:paddingRight = "@dimen/activity_horizontal_margin"
+              android:paddingTop = "@dimen/activity_vertical_margin"
+              app:layout_behavior = "@string/appbar_scrolling_view_behavior"
+              tools:context = ".MainActivity"
+              tools:showIn = "@layout/app_bar_main"
+    android:weightSum="1">
+
+    <ImageView
+        android:id = "@+id/active_inactive_image"
+        android:layout_width = "184dp"
+        android:layout_height = "179dp"
+        android:layout_gravity = "center_horizontal"
+        android:layout_marginBottom = "16dp"
+        android:layout_marginLeft = "16dp"
+        android:layout_marginRight = "16dp"
+        android:layout_marginTop = "16dp"
+        android:src = "@drawable/transfile_active"
+        android:layout_weight="0.22" />
+
+
+    <TextView
+        android:id = "@+id/ipAddressText"
+        android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content"
+        android:layout_alignParentTop = "true"
+        android:layout_centerHorizontal = "true"
+        android:layout_marginLeft = "16dp"
+        android:layout_marginRight = "16dp"
+        android:text = "Server Stopped.."
+        android:textAppearance = "?android:attr/textAppearanceLarge"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.18" />
+
+    <Button
+        android:id = "@+id/startStopButton"
+        android:padding="20dp"
+        android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content"
+        android:layout_centerHorizontal = "true"
+        android:layout_centerVertical = "true"
+        android:layout_marginLeft = "16dp"
+        android:layout_marginRight = "16dp"
+        android:layout_marginTop = "16dp"
+        android:text = "@string/start"
+        android:layout_gravity="center_horizontal" />
+</LinearLayout>

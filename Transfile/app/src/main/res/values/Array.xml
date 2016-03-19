@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="image">
+        <item>png</item>
+        <item>jpg</item>
+        <item>jpeg</item>
+        <item>gif</item>
+        <item>svg</item>
+        <item>svgz</item>
+    </string-array>
+</resources>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android = "http://schemas.android.com/apk/res/android"
+              android:layout_width = "match_parent"
+              android:layout_height = "match_parent"
+              android:orientation = "vertical">
+
+    <TextView
+        android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content"
+        android:layout_margin = "16dp"
+        android:text = "1. Connect to a wireless network" />
+
+    <TextView
+        android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content"
+        android:layout_margin = "16dp"
+        android:text = "2. Connect to the same network on your PC" />
+
+    <TextView
+        android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content"
+        android:layout_margin = "16dp"
+        android:text = "3. Press 'Start Server' Button in the app" />
+
+    <TextView
+        android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content"
+        android:layout_margin = "16dp"
+        android:text = "4. Enter the generated IP address in a browser on your PC" />
+
+    <TextView
+        android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content"
+        android:layout_margin = "16dp"
+        android:text = "5. Transfer files, stream videos and music...all wirelessly!" />
+
+    <TextView
+        android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content"
+        android:layout_gravity = "right"
+        android:layout_margin = "18dp"
+        android:onClick = "howToGotItClicked"
+        android:text = "GOT IT"
+        android:textColor = "#006699" />
+
+</LinearLayout>

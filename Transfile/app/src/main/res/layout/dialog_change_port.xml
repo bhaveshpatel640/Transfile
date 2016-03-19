@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="143dp"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/enter_port_text"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/change_port_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:inputType="number"
+            android:numeric="integer" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/change_port_set_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="top|left|bottom|center_horizontal|right"
+                android:layout_weight="0.50"
+                android:gravity="center_vertical|center_horizontal"
+                android:onClick="changePortSetTextClicked"
+                android:text="@string/set"
+                android:textColor="#006699" />
+
+            <TextView
+                android:id="@+id/change_port_cancel_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="top|left|bottom|center_horizontal|right"
+                android:layout_weight="0.5"
+
+                android:gravity="center_vertical|center_horizontal"
+                android:onClick="changePortCancelTextClicked"
+                android:text="@string/cancel"
+                android:textColor="#006699" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

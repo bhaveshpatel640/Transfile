@@ -1,0 +1,720 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Transfile</title>
+    <meta name="description" content="This is a circular flyout menu made with Sass and CSS3 transitions, transforms, and animations.">
+    <link rel="stylesheet" href="web/css/font-awesome.css">
+    <link href="web/owl.carousel/owl-carousel/owl.carousel.css" rel="stylesheet">
+    <link href="web/owl.carousel/owl-carousel/owl.theme.css" rel="stylesheet">
+    <link href="web/owl.carousel/assets/js/google-code-prettify/prettify.css" rel="stylesheet">
+    <link rel="stylesheet" href="web/foundation-6/css/foundation.css">
+    <link rel="stylesheet" href="web/MusicPlayer/dist/APlayer.css">
+    <link href='web/css/fonts.css' rel='stylesheet' type='text/css'>
+    <!--    <link href="web/assets/css/bootstrapTheme.css" rel="stylesheet">-->
+    <link href="web/owl.carousel/assets/css/custom.css" rel="stylesheet">
+    <!-- Owl Carousel Assets -->
+    <!-- Prettify -->
+    <script src="web/jquery.mobile-1.4.5/jquery.mobile-1.4.5.js"></script>
+
+    <link rel="stylesheet" href="web/css/circle-menu.css">
+    <link rel="stylesheet" href="web/css/common.css">
+    <link rel="stylesheet" href="web/css/custom.css">
+
+</head>
+
+<body onload="loadSystemInfo()">
+
+    <header class="demo-header" style="position:fixed;top:0;width:100%;">
+        <nav class="demo-header-nav">
+            <a class="demo-header-nav__link" style="font-size:1.2em;"><i class="fa fa-wifi fa-lg"></i>&nbsp;&nbsp;&nbsp;&nbsp;Transfile</a>
+            <a class="demo-header-nav__link" style="font-size:1.2em;"><i
+                class="fa fa-power-off fa-lg"></i></a>
+        </nav>
+    </header>
+
+
+    <div id=body style="margin-top:4%;">
+        <div id="myModalImageDetails" class="modal" style="display:none;height:initial;">
+            <!-- Modal content -->
+            <div id="myModalContentImageDetails" class="modal-content">
+                <span id="closeImageImageDetails" style="color:black;position:relative;bottom:10%;float:right;"><i
+                        class="fa fa-times fa-lg"></i></span>
+                <div class="item" style="font-size:1.2em;color:black;" id="myModalItemImageDetails">
+                    Name : <span id="imageShowName"></span>
+                    <br> Size : <span id="imageSize"></span>
+                    <br> Width : <span id="imageWidth"></span>
+                    <br> Height : <span id="imageHeight"></span>
+                    <br> Path : <span id="imagePath"></span>
+                    <br> Last Modified : <span id="imageLastModified"></span>
+                    <br>
+                </div>
+
+            </div>
+
+        </div>
+        <div id="home_page">
+            <div class="row">
+                <div class="column small-5 left" style="background:transparent;margin-top:5%;margin-left:2%">
+                    <object style="width:80%" id="mobile-svg" data="web/images/mobile.svg" type="image/svg+xml">
+                    </object>
+
+                </div>
+                <div class="small-6 columns" style="margin-top:3%;background:transparent;">
+                    <div class="row small-12" style="margin-top:5%">
+                        <div class="text-left small-12 " style="font-size:2em">Welcome, <span id="DeviceModelName">-</span>
+                        </div>
+                        <div style="font-size:1.2em" class="small-6 columns">
+                            <div class="row">
+                                <div class="small-6 columns text-left"> Device Model</div>
+                                <div class="small-6 columns text-left"><span id="device_model">Unknown</span></div>
+                            </div>
+                            <div class="row">
+                                <div class="small-6 columns text-left"> Battery Power</div>
+                                <div class="small-6 columns text-left"><span id="battery_power">Unknown</span></div>
+                            </div>
+                            <div class="row">
+                                <div class="small-6 columns text-left"> Status</div>
+                                <div class="small-6 columns text-left"> <span id="charging_status">Unknown</span></div>
+                            </div>
+                            <div class="row">
+                                <div class="small-6 columns text-left"> Wifi</div>
+                                <div class="small-6 columns text-left"> <span id="wifi">Unknown</span></div>
+                            </div>
+                        </div>
+                        <div class="small-6 columns text-left" style="font-size:1.2em"></div>
+                    </div>
+
+                    <div class="row" style="margin-top:10%">
+                        <div class="small-3 columns">
+                            <object data="web/images/video.svg" type="image/svg+xml">
+                            </object>
+                            <div class="text-left count"> <span id="video_count">0</span></div>
+                            <div class="text-left size"> <span id="video_size">-</span></div>
+
+                        </div>
+                        <div class="small-3 columns">
+                            <object data="web/images/photo.svg" type="image/svg+xml">
+                            </object>
+                            <div class="text-left count"> <span id="image_count">0</span></div>
+                            <div class="text-left size"> <span id="image_size">-</span></div>
+
+                        </div>
+                        <div class="small-3 columns">
+                            <object data="web/images/music.svg" type="image/svg+xml">
+                            </object>
+                            <div class="text-left count"> <span id="music_count">0</span></div>
+                            <div class="text-left size"> <span id="music_size">-</span></div>
+
+                        </div>
+                        <div class="small-3 columns">
+                            <object data="web/images/files.svg" type="image/svg+xml"></object>
+                            <div class="text-left count"> <span id="file_count">0</span></div>
+                            <div class="text-left size"> <span id="file_size">-</span></div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-top:5%;">
+                        <div class="text-center">Internal storage:&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span id="used_memory">-</span>/<span id="total_memory">-</span></div>
+                        <div class="progress" role="progressbar" tabindex="0" aria-valuenow="50" aria-valuemin="0" aria-valuetext="50 percent" aria-valuemax="100">
+                            <div class="progress-meter" id="progress_meter" style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div id="photo_page" style="display: none">
+            <div class="expanded row" style="margin-top:6.5%;margin-left:4%;">
+                <div class="small-3 columns">
+                    <div class="center-row">
+                        <div class="small-12 columns">
+                            <ul class="inline-list center" style="display:none;">
+                                <i class="fa fa-search fa-lg" style="color:#ff5722;position:relative;top:27px;left:10px;"></i>
+
+                                <form>
+                                    <div class="row collapse">
+                                        <div class="small-12 columns">
+                                            <input type="text" class="dream-search" placeholder="Search" />
+                                        </div>
+                                    </div>
+                                </form>
+                            </ul>
+                        </div>
+                        <div class="small-12 columns" style="display:none;">
+                            <ul class="inline-list center">
+                                <button class="file-upload">
+                                    <input type="file" class="file-input">Upload
+                                </button>
+                            </ul>
+                        </div>
+                        <!--
+                    <div class="small-12 columns">
+                        <ul class="inline-list center">
+                            <a id="slideshow" class="button">Start Slideshow</a>
+                        </ul>
+                    </div>
+-->
+                    </div>
+                </div>
+                <!-- The Modal -->
+                <div id="myModal" class="modal" style="height:auto;">
+                    <!-- Modal content -->
+                    <div id="myModalContent" class="modal-content">
+                        <span id="closeImage" style="color:black;position:relative;bottom:10%;float:right;"><i
+                        class="fa fa-times fa-lg"></i></span>
+                        <div id="owl-demo">
+                            <div class="item" id="myModalItem">
+                                <img id="modelImage" src="web/owl.carousel/demos/assets/owl1.jpg?Thumbnail=1" alt="Owl Image">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!--
+                /*{
+                "showName":"IMG_20160227_143304.jpg",
+                "size":4554665,
+                "width":"3264",
+                "height":"2448",
+                "path":"\/storage\/emulated\/0\/DCIM\/Camera\/IMG_20160227_143304.jpg",
+                "modifyTime":1456563789000,
+                "canDelete":true
+                },*/
+-->
+                <script>
+                    function modalImageDetails(showName, size, width, height, path, modifyTime) {
+                        //alert(showName+size+width+height+path+modifyTime);
+
+                        var modalImageDetails = document.getElementById('myModalImageDetails');
+                        var imageShowName = document.getElementById('imageShowName').innerHTML = showName;
+                        var imageSize = document.getElementById('imageSize').innerHTML = pharseFileSize(parseInt(size));
+                        var imageWidth = document.getElementById('imageWidth').innerHTML = width;
+                        var imageHeight = document.getElementById('imageHeight').innerHTML = height;
+                        var imagePath = document.getElementById('imagePath').innerHTML = path;
+                        var imageLastModified = document.getElementById('imageLastModified').innerHTML = timeConverter(modifyTime);
+
+                        modalImageDetails.style.display = "block";
+                        // Get the <span> element that closes the modal
+                        var span = document.getElementById("closeImageImageDetails");
+
+                        // When the user clicks on <span> (x), close the modal
+                        span.onclick = function () {
+                                modalImageDetails.style.display = "none";
+                            }
+                            //
+                            //                        // When the user clicks anywhere outside of the modal, close it
+                            //                        window.onclick = function (event) {
+                            //                            if (event.target == modal) {
+                            //                                modalImageDetails.style.display = "none";
+                            //                            }
+                            //                        }
+                    }
+                </script>
+                <script>
+                    function showImage(image) {
+                        var HEIGHT, WIDTH;
+                        var img = document.getElementById(image);
+                        var imgsrc = img.src.concat("?Thumbnail=1");
+                        if (imgsrc.indexOf("?") != -1)
+                            imgsrc = imgsrc.substring(0, img.src.indexOf("?"));
+                        else {
+                            imgsrc = img.src;
+                        }
+                        //alert(imgsrc+"\n"+img.src);
+
+                        $('<img/>').attr('src', imgsrc).load(function () {
+                            size = {
+                                w: this.width
+                                , h: this.height
+                            };
+                            // so, our image is loaded and now run something!
+                        });
+                        HEIGHT = size.h;
+                        WIDTH = size.w;
+                        var ratio = WIDTH * 1.0 / HEIGHT;
+                        //alert(HEIGHT+WIDTH);
+                        // Get the modal
+                        var modal = document.getElementById('myModal');
+                        var modalContent = document.getElementById('myModalContent');
+                        var modalItem = document.getElementById('myModalItem');
+                        modal.style.display = "block";
+
+                        var FIXEDHEIGHT = 600;
+
+                        modal.width = ratio * FIXEDHEIGHT;
+                        modal.height = FIXEDHEIGHT;
+                        modalContent.width = ratio * (FIXEDHEIGHT - 5);
+                        modalContent.height = FIXEDHEIGHT - 5;
+                        modalItem.width = ratio * (FIXEDHEIGHT - 10);
+                        modalItem.height = FIXEDHEIGHT - 10;
+
+                        img = document.getElementById("modelImage");
+                        img.src = imgsrc;
+                        img.width = ratio * (FIXEDHEIGHT - 50);
+                        img.height = FIXEDHEIGHT - 50;
+                        img.style.width
+                            // Get the <span> element that closes the modal
+                        var span = document.getElementById("closeImage");
+
+                        // When the user clicks on <span> (x), close the modal
+                        span.onclick = function () {
+                            modal.style.display = "none";
+                        }
+
+                        // When the user clicks anywhere outside of the modal, close it
+                        window.onclick = function (event) {
+                            if (event.target == modal) {
+                                modal.style.display = "none";
+                            }
+                        }
+                    }
+                </script>
+<!--
+                <script>
+                    $(document).ready(function () {
+
+                        $("#owl-demo").owlCarousel({
+
+                            autoPlay: 3000, //Set AutoPlay to 3 seconds
+                            autoHeight: true
+                            , items: 2
+                            , itemsDesktop: [1199, 3]
+                            , itemsDesktopSmall: [979, 3]
+
+                        });
+
+                    });
+                </script>
+-->
+                <div class="text-center small-12 " style="font-size:2em">Photos</div>
+                <div class="small-9 columns">
+                    <div class="callout medium">
+                        <div class="row">
+                            <div id="photos_list" class="small-12 columns nopadding">
+                                <div class="text-center large-12 " style="font-size:1.2em">No Picture Found</div>
+                            </div>
+
+                            <!--
+                            <div class="small-3 columns nopadding">
+                                <div class="image-wrapper overlay-fade-in">
+                                    <img id="image_123" src="web/owl.carousel/demos/assets/owl1.jpg?Thumbnail=1" />
+                                    <div class="image-overlay-content">
+                                        <h2><i class="fa fa-download" style="margin-right:15px;"></i><i
+                                            class="fa fa-trash" style="margin-right:15px;"></i><i
+                                            class="fa fa-info-circle"></i></h2>
+                                        <a onclick="showImage('image_123');">
+                                            <div style="width:100%;height:100%;"></div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+-->
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div id="music_page" style="display: none">
+            <div class="expanded row" style="margin-top:6.5%;">
+                <div class="small-4 columns">
+                    <div class="center-row">
+                        <div class="small-12 columns" style="display:none;">
+                            <ul class="inline-list center">
+                                <i class="fa fa-search fa-lg" style="color:#ff5722;position:relative;top:27px;left:10px;"></i>
+
+                                <form>
+                                    <div class="row collapse">
+                                        <div class="small-12 columns">
+                                            <input type="text" class="dream-search" placeholder="Search">
+                                        </div>
+                                    </div>
+                                </form>
+                            </ul>
+                        </div>
+                        <div class="small-12 columns" style="display:none;">
+                            <ul class="inline-list center">
+                                <button class="file-upload">
+                                    <input type="file" class="file-input">Upload
+                                </button>
+                            </ul>
+                        </div>
+                        <div class="small-12 columns" style="margin-top:10px;">
+                            <ul class="inline-list center">
+                                <div class="container" style="max-width:500px;">
+                                    <div id="player" class="aplayer"></div>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center small-12 " style="font-size:2em">Music</div>
+
+                <div class="small-8 columns">
+                    <table class="hover">
+                        <thead>
+                            <tr>
+                                <th class="text-center" width="300" style="font-size:1.2em;">Track</th>
+                                <th class="text-center" width="130" style="font-size:1.2em;">Artist</th>
+                                <th class="text-center" width="100" style="font-size:1.2em;">Duration</th>
+                                <th class="text-center" width="100" style="font-size:1.2em;">Size</th>
+                                <th width="120" class="text-center" style="font-size:1.2em;">Download</th>
+                                <th width="120" class="text-center" style="font-size:1.2em;">Play</th>
+                            </tr>
+                        </thead>
+                        <tbody id="musics_list">
+                            <tr>
+                                <td class="text-center" width="300">Interstellar - Main Theme</td>
+                                <td class="text-center" width="130">Hans Zimmer</td>
+                                <td class="text-center" width="100">04:08</td>
+                                <td class="text-center" width="100">6.54MB</td>
+                                <td width="120" class="text-center"><i class="fa fa-download fa-large"></i>
+                                </td>
+                                <td width="120" class="text-center"><i class="fa fa-play"></i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center" width="300">Interstellar - Main Theme</td>
+                                <td class="text-center" width="130">Hans Zimmer</td>
+                                <td class="text-center" width="100">04:08</td>
+                                <td class="text-center" width="100">6.54MB</td>
+                                <td width="120" class="text-center"><i class="fa fa-download fa-large"></i>
+                                </td>
+                                <td width="120" class="text-center"><i class="fa fa-play"></i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center" width="300">Interstellar - Main Theme</td>
+                                <td class="text-center" width="130">Hans Zimmer</td>
+                                <td class="text-center" width="100">04:08</td>
+                                <td class="text-center" width="100">6.54MB</td>
+                                <td width="120" class="text-center"><i class="fa fa-download fa-large"></i>
+                                </td>
+                                <td width="120" class="text-center"><i class="fa fa-play"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="small-1 columns"></div>
+            </div>
+
+
+            <script src="web/MusicPlayer/dist/APlayer.min.js"></script>
+            <!--
+            <script>
+                var ap = new APlayer({
+                    element: document.getElementById('player')
+                    , narrow: false
+                    , autoplay: false
+                    , showlrc: false
+                    , theme: '#ad7a86'
+                    , music: [
+                        {
+                            title: 'Preparation'
+                            , author: 'Hans Zimmer/Richard Harvey'
+                            , url: 'http://7xq131.com1.z0.glb.clouddn.com/Preparation.mp3'
+                            , pic: 'http://7xq131.com1.z0.glb.clouddn.com/Preparation.jpg'
+                }
+
+                        
+                        , {
+                            title: 'Preparation'
+                            , author: 'Hans Zimmer/Richard Harvey'
+                            , url: 'http://7xq131.com1.z0.glb.clouddn.com/Preparation.mp3'
+                            , pic: 'http://7xq131.com1.z0.glb.clouddn.com/Preparation.jpg'
+                }
+
+                        
+                        , {
+                            title: 'Preparation'
+                            , author: 'Hans Zimmer/Richard Harvey'
+                            , url: 'http://7xq131.com1.z0.glb.clouddn.com/Preparation.mp3'
+                            , pic: 'http://7xq131.com1.z0.glb.clouddn.com/Preparation.jpg'
+                }
+            ]
+                });
+                ap.init();
+            </script>
+-->
+        </div>
+        <script src="web/MusicPlayer/dist/APlayer.min.js"></script>
+        <script>
+            var ap = new APlayer({
+                element: document.getElementById('player')
+                , narrow: false
+                , autoplay: false
+                , showlrc: false
+                , theme: '#ad7a86'
+                , music: []
+            });
+            ap.init();
+        </script>
+        <div id="video_page" style="display: none">
+            <div class="expanded row" style="margin-top:6.5%;margin-left:4%;">
+                <div class="small-3 columns">
+                    <div class="center-row">
+                        <!--
+                        <div class="small-12 columns">
+                            <ul class="inline-list center">
+                                <i class="fa fa-search fa-lg" style="color:#ff5722;position:relative;top:27px;left:10px;"></i>
+                                <form>
+                                    <div class="row collapse">
+                                        <div class="small-12 columns">
+                                            <input type="text" class="dream-search" placeholder="Search">
+                                        </div>
+                                    </div>
+                                </form>
+                            </ul>
+                        </div>
+                        <div class="small-12 columns">
+                            <ul class="inline-list center">
+                                <button class="file-upload">
+                                    <input type="file" class="file-input">Upload
+                                </button>
+                            </ul>
+                        </div>
+-->
+
+                        <!--
+                        <div class="small-12 columns">
+                            <ul class="inline-list center">
+                                <a id="showVideo" class="button">Play videos</a>
+                            </ul>
+                        </div>
+-->
+
+                    </div>
+                </div>
+                <div class="text-center small-12 " style="font-size:2em">Videos</div>
+                <div class="small-9 columns">
+                    <div class="callout large">
+                        <div class="row">
+                            <div id="videos_list" class="small-12 columns nopadding">
+                                <div class="text-center large-12 " style="font-size:1.2em">No Videos Found</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="small-1 columns"></div>
+        </div>
+        <!-- The Modal -->
+        <div id="myModalVideo" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content" style="padding:20px;">
+                <span id="closeVideo" style="color:black;position:relative;bottom:10%;float:right;"><i
+                        class="fa fa-times fa-lg"></i></span>
+                <div class="item">
+                    <video controls="" id="playingVideo" height="400px" width="500px">
+                    </video>
+                </div>
+            </div>
+        </div>
+        <script>
+            function modalVideoDetails(showName, size, width, height, path, modifyTime) {
+                alert(showName + size + width + height + path + modifyTime);
+                //
+                //                var modalImageDetails = document.getElementById('myModalImageDetails');
+                //                var imageShowName = document.getElementById('imageShowName').innerHTML = showName;
+                //                var imageSize = document.getElementById('imageSize').innerHTML = pharseFileSize(parseInt(size));
+                //                var imageWidth = document.getElementById('imageWidth').innerHTML = width;
+                //                var imageHeight = document.getElementById('imageHeight').innerHTML = height;
+                //                var imagePath = document.getElementById('imagePath').innerHTML = path;
+                //                var imageLastModified = document.getElementById('imageLastModified').innerHTML = timeConverter(modifyTime);
+                //
+                //                modalImageDetails.style.display = "block";
+                //                // Get the <span> element that closes the modal
+                //                var span = document.getElementById("closeImageImageDetails");
+                //
+                //                // When the user clicks on <span> (x), close the modal
+                //                span.onclick = function () {
+                //                    modalImageDetails.style.display = "none";
+                //                }
+                //
+                //                // When the user clicks anywhere outside of the modal, close it
+                //                window.onclick = function (event) {
+                //                    if (event.target == modal) {
+                //                        modalImageDetails.style.display = "none";
+                //                    }
+                //                }
+            }
+
+            function showVideo(video) {
+                //                
+                var vid = document.getElementById(video);
+                var vidpath = vid.src;
+                var vidsrc = vidpath.concat("?VideoThumbnail=1");
+                if (vidsrc.indexOf("?") != -1)
+                    vidsrc = vidsrc.substring(0, vid.src.indexOf("?"));
+                else {
+                    vidsrc = vidpath;
+                }
+
+
+                // var videoSource = document.getElementById("videoSource");
+                var playingVideo = document.getElementById("playingVideo");
+                playingVideo.innerHTML = "";
+                var source = document.createElement('source');
+                playingVideo.appendChild(source);
+                source.setAttribute('src', vidsrc);
+                source.setAttribute("id", "playingSource");
+                playingVideo.load();
+                playingVideo.play();
+
+                //            playingVideo.src=vidsrc;
+                //          videoSource.setAttribute("src", vidsrc);
+                //alert(vidsrc);
+                // Get the modal
+                var modalVideo = document.getElementById('myModalVideo');
+                // When the user clicks the button, open the modal 
+                modalVideo.style.display = "block";
+
+
+
+
+                // Get the <span> element that closes the modal
+                var span = document.getElementById("closeVideo");
+                // When the user clicks on <span> (x), close the modal
+                span.onclick = function () {
+                    modalVideo.style.display = "none";
+                    var playingVideo = document.getElementById("playingVideo");
+                    var playingSource = document.getElementById("playingSource");
+                    //playingVideo.trigger('stop');
+                    playingVideo.pause();
+                    playingVideo.currentTime = 0;
+                    playingSource.setAttribute("src", "");
+                }
+            }
+        </script>
+
+        <div id="documents_page" style="display: none">
+            <div class=" expanded row" style="margin-top:6.5%; margin-left:4%;">
+                <div class="small-3 columns">
+                    <div class="center-row">
+                        <div class="small-12 columns" style="display:none;">
+                            <ul class="inline-list center">
+                                <i class="fa fa-search fa-lg" style="color:#ff5722;position:relative;top:27px;left:10px;"></i>
+
+                                <form>
+                                    <div class="row collapse">
+                                        <div class="small-12 columns">
+                                            <input type="text" class="dream-search" placeholder="Search">
+                                        </div>
+                                    </div>
+                                </form>
+                            </ul>
+                        </div>
+                        <div class="small-12 columns" style="display:none;">
+                            <ul class="inline-list center">
+                                <button class="file-upload">
+                                    <input type="file" class="file-input">Upload
+                                </button>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="small-9 columns">
+                    <div id="directoryList" class="small-12 columns" style="padding:8px;padding-left:25px; margin-top:6px;font-size:1.2em; ">
+                        <span class="text-center">ABCD</span>/
+                        <span class="text-center">EFGH</span>/ 
+                        <span class="text-center">IJKL</span>/ 
+                        <span class="text-center">MNOP</span>/ 
+                        <span class="text-center">QRST</span>
+                    </div>
+                    <table class="hover" style="margin-top:0%;  ">
+                        <thead>
+                            <tr>
+                                <th class="text-center" width="400px">Name</th>
+                                <th class="text-center" width="100px">Type</th>
+                                <th class="text-center" width="100px">Size</th>
+                                <th class="text-center" width="250px">Modify Time</th>
+                                <th class="text-center" width="100px">Download</th>
+                            </tr>
+                        </thead>
+                        <tbody id="files_list" style="margin-bottom:10px;">
+                            <tr>
+                                <td class="text-center" width="400px">Logo Colorswitch.apk</td>
+                                <td class="text-center" width="100px">APK</td>
+                                <td class="text-center" width="100px">17.74MB</td>
+                                <td class="text-center" width="250px">2016-02-09 12:23:09</td>
+                                <td class="text-center" width="100px"><i class="fa fa-download fa-large"></i>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <nav id="c-circle-nav" class="c-circle-nav">
+        <button id="c-circle-nav__toggle" class="c-circle-nav__toggle">
+            <span>Toggle</span>
+        </button>
+        <ul class="c-circle-nav__items">
+            <li class="c-circle-nav__item">
+                <a rel="music_page" id="music" class="c-circle-nav__link">
+                    <img id="music-svg" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxOC4wLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkNhcGFfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHZpZXdCb3g9IjI1OCAzNDggOTYgOTYiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMjU4IDM0OCA5NiA5NiIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8ZyBpZD0iVHJhY2tfX3gyRl9fTm90ZSI+DQoJPHBhdGggZmlsbD0iI0ZGRkZGRiIgZD0iTTI5Ny44LDM3My44Yy0zLjYsMC42LTQuMywyLjktNC4zLDUuNHYyNy41YzAsMi0xLjYsMy41LTMuNiwzLjVjMCwwLDAsMCwwLDBjLTQuOSwwLTguOSwyLjgtOC45LDYuMg0KCQljMCwzLjQsNCw2LjIsOC45LDYuMnM4LjktMi44LDguOS02LjJjMC0wLjMsMC0wLjYtMC4xLTAuOWgwLjF2LTIyLjhjMC0xLjcsMS4zLTMuMiwzLTMuNGwxOS45LTIuOGMyLjEtMC4zLDQsMS4zLDQsMy40djEzLjMNCgkJYzAsMi0xLjYsMy41LTMuNiwzLjVjMCwwLDAsMCwwLDBjLTQuOSwwLTguOSwyLjgtOC45LDYuMmMwLDMuNSw0LDYuMiw4LjksNi4yYzQuOCwwLDguNi0yLjYsOC45LTUuOWwwLDB2LTQwLjINCgkJYzAtMi4xLTEuOS0zLjctNC0zLjRMMjk3LjgsMzczLjh6Ii8+DQo8L2c+DQo8L3N2Zz4NCg==">
+                </a>
+            </li>
+            <li class="c-circle-nav__item">
+                <a rel="photo_page" id="photo" class="c-circle-nav__link">
+                    <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxOC4wLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkNhcGFfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHZpZXdCb3g9IjIyNy40IDIyNy40IDk2IDk2IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDIyNy40IDIyNy40IDk2IDk2IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxnPg0KCTxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik0yOTcuMiwyNTZoLTQzLjdjLTEuOCwwLTMuMiwxLjQtMy4yLDMuMnYzMi41YzAsMS44LDEuNCwzLjIsMy4yLDMuMmg0My43YzEuOCwwLDMuMi0xLjQsMy4yLTMuMnYtMzIuNQ0KCQlDMzAwLjQsMjU3LjQsMjk5LDI1NiwyOTcuMiwyNTZ6IE0yOTcuMiwyNTkuMXYyMy4xbC02LjMtNS43Yy0wLjktMC45LTIuNC0wLjgtMy4zLDAuMWwtNi4zLDYuM0wyNjguOSwyNjhjLTAuOS0xLjEtMi43LTEuMS0zLjYsMA0KCQlsLTExLjcsMTMuNnYtMjIuNEgyOTcuMnogTTI4My43LDI2Ny41YzAtMi40LDItNC40LDQuNC00LjRjMi40LDAsNC40LDIsNC40LDQuNHMtMiw0LjQtNC40LDQuNA0KCQlDMjg1LjcsMjcxLjgsMjgzLjcsMjY5LjksMjgzLjcsMjY3LjV6Ii8+DQo8L2c+DQo8L3N2Zz4NCg==">
+                </a>
+            </li>
+            <li class="c-circle-nav__item">
+                <a rel="video_page" id="video" class="c-circle-nav__link">
+                    <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxOC4wLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkNhcGFfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHZpZXdCb3g9Ii0zIC0zIDk2IDk2IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IC0zIC0zIDk2IDk2IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxnPg0KCTxwYXRoIGlkPSJZb3VUdWJlX194MjhfYWx0X3gyOV8iIGZpbGw9IiNGRkZGRkYiIGQ9Ik03MCwzNWMwLTQuMS0zLjMtNy41LTcuNS03LjVIMjcuNWMtNC4xLDAtNy41LDMuMy03LjUsNy41djIwDQoJCWMwLDQuMSwzLjMsNy41LDcuNSw3LjVoMzUuMWM0LjEsMCw3LjUtMy4zLDcuNS03LjVWMzV6IE00MCw1My41VjM0LjZMNTQuMyw0NEw0MCw1My41eiIvPg0KPC9nPg0KPC9zdmc+DQo=">
+                </a>
+            </li>
+            <li class="c-circle-nav__item">
+                <a rel="documents_page" id="documents" class="c-circle-nav__link">
+                    <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxOC4wLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkNhcGFfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHZpZXdCb3g9IjE4Ny4zIDE4Ny4zIDk2IDk2IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDE4Ny4zIDE4Ny4zIDk2IDk2IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxnPg0KCTxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik0yNDUuOCwyMDguMmgtMjcuMmMtMS44LDAtMy4zLDEuNS0zLjMsMy4zVjI1OWMwLDEuOCwxLjUsMy4zLDMuMywzLjNIMjUyYzEuOCwwLDMuMy0xLjUsMy4zLTMuM3YtNDAuNQ0KCQlMMjQ1LjgsMjA4LjJ6IE0yNDYuNiwyMTMuMmw0LjEsNC41aC00LjFWMjEzLjJ6IE0yNTIuNSwyNTljMCwwLjMtMC4yLDAuNS0wLjUsMC41aC0zMy40Yy0wLjMsMC0wLjUtMC4yLTAuNS0wLjV2LTQ3LjUNCgkJYzAtMC4zLDAuMi0wLjUsMC41LTAuNWgyNS4ydjguMWMwLDAuOCwwLjYsMS40LDEuNCwxLjRoNy4zVjI1OXogTTIyMywyMjMuMWgyMy43YzAuNiwwLDEsMC41LDEsMWMwLDAuNi0wLjUsMS0xLDFIMjIzDQoJCWMtMC42LDAtMS0wLjUtMS0xQzIyMiwyMjMuNSwyMjIuNCwyMjMuMSwyMjMsMjIzLjF6IE0yNDcuNywyMzEuMWMwLDAuNi0wLjUsMS0xLDFIMjIzYy0wLjYsMC0xLTAuNS0xLTFzMC41LTEsMS0xaDIzLjcNCgkJQzI0Ny4yLDIzMC4xLDI0Ny43LDIzMC41LDI0Ny43LDIzMS4xeiBNMjQ3LjcsMjM3LjljMCwwLjYtMC41LDEtMSwxSDIyM2MtMC42LDAtMS0wLjUtMS0xYzAtMC42LDAuNS0xLDEtMWgyMy43DQoJCUMyNDcuMiwyMzYuOSwyNDcuNywyMzcuMywyNDcuNywyMzcuOXogTTI0Ny43LDI0NC44YzAsMC42LTAuNSwxLTEsMUgyMjNjLTAuNiwwLTEtMC41LTEtMXMwLjUtMSwxLTFoMjMuNw0KCQlDMjQ3LjIsMjQzLjgsMjQ3LjcsMjQ0LjIsMjQ3LjcsMjQ0Ljh6Ii8+DQo8L2c+DQo8L3N2Zz4NCg==" alt="">
+                </a>
+            </li>
+            <li class="c-circle-nav__item">
+                <a rel="home_page" id="home" class="c-circle-nav__link">
+                    <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxOC4wLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB2aWV3Qm94PSIwIDAgOTYgOTYiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDk2IDk2IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik03MS45LDUxLjJjLTAuMiwwLjItMC40LDAuMy0wLjcsMC4zaC0wLjFjLTAuMiwwLTAuNS0wLjEtMC43LTAuMkw0OSwzMy4zbC0yMS41LDE4DQoJYy0wLjIsMC4yLTAuNSwwLjMtMC43LDAuMmMtMC4yLDAtMC41LTAuMi0wLjctMC4zbC0xLjktMi4zYy0wLjMtMC40LTAuMy0xLjEsMC4xLTEuNGwyMi4zLTE4LjdjMS4zLTEuMSwzLjQtMS4xLDQuNywwbDcuNiw2LjR2LTYuMQ0KCWMwLTAuNiwwLjQtMSwxLTFoNmMwLjYsMCwxLDAuNCwxLDF2MTIuN2w2LjgsNS43YzAuNCwwLjMsMC41LDEsMC4xLDEuNEw3MS45LDUxLjJMNzEuOSw1MS4yeiBNNjYuOSw2NmMwLDEuMS0wLjksMi0yLDJINTNWNTZINDV2MTINCglIMzMuMWMtMS4xLDAtMi0wLjktMi0yVjUxYzAtMC4xLDAtMC4xLDAtMC4yTDQ5LDM2LjFsMTcuOCwxNC44YzAsMC4xLDAsMC4xLDAsMC4yQzY2LjksNTEsNjYuOSw2Niw2Ni45LDY2eiIvPg0KPC9zdmc+DQo=" alt="">
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <script src="web/js/circleMenu.js"></script>
+    <!-- EXTERNALweb/ SCRIPTS FOR CALLMENICK.COM, PLEASE DO NOT INCLUDE -->
+    <script src="web/js/githubIcons.js"></script>
+    <script src="web/js/carbonAd.js"></script>
+    <script src="web/js/script.js"></script>
+
+    <script src="web/owl.carousel/assets/js/jquery-1.9.1.min.js"></script>
+    <script src="web/owl.carousel/owl-carousel/owl.carousel.js"></script>
+    <script>
+        $('a').on('click', function () {
+            var target = $(this).attr('rel');
+            if (target == "photo_page") {
+                loadPhotos();
+            } else if (target == "video_page") {
+                loadVideos();
+            } else if (target == "music_page") {
+                loadMusics();
+            } else if (target == "documents_page") {
+                loadFiles("/storage/emulated/0/");
+            }
+            $("#" + target).show().siblings("div").hide();
+        });
+    </script>
+    <!-- /EXTERNAL SCRIPTS -->
+
+</body>
+
+</html>
