@@ -14,13 +14,17 @@ import android.widget.Toast;
 
 import com.wireless.transfile.R;
 import com.wireless.transfile.app.AppLog;
+import com.wireless.transfile.utility.Compress;
 import com.wireless.transfile.utility.Utility;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -32,6 +36,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import static com.wireless.transfile.app.AppSettings.setPortNumber;
 import static com.wireless.transfile.app.AppSettings.setrequest;
@@ -44,10 +50,11 @@ import static com.wireless.transfile.utility.JsonInfo.getVideoList;
 import static com.wireless.transfile.utility.MimeTypes.contentType;
 
 public class HttpResponse extends Thread {
+    private static final int BUFFER = 1024;
     Socket socket;
     String header;
     Context context;
-
+    String DOWNLOAD = "/download.zip";
     NotificationManager notificationManager;
     private static final int THUMBNAILSIZE = 168;
     // private static final String HTTP_DATE_FORMAT = "EEE, dd MMM yyyy HH:mm:ss z";
@@ -225,13 +232,42 @@ public class HttpResponse extends Thread {
                                     sendBytes(fileInputStream, outputStream);
                                 }
                             } else {
-                                response = getDirectoryList(file);
-                                //response = fileURL + "\nIt is a directory, You are not allowed!";
-                                outputStream.write((httpVersion + " 200" + "\r\n").getBytes());
-                                outputStream.write(("Content type: text/html" + "\r\n").getBytes());
-                                outputStream.write(("Content length: " + response.length() + "\r\n").getBytes());
-                                outputStream.write(("\r\n").getBytes());
-                                outputStream.write((response + "\r\n").getBytes());
+                                if (query != null && query.containsKey("download")) {
+                                    if (query.get("download") != null && !query.get("download").isEmpty()) {
+                                        list = query.get("download");
+                                        if (list != null && !list.isEmpty()) {
+                                            String download = list.get(0);
+                                            if (download.equals("zip")) {
+                                                List<File> files = getDirectoryFiles(file);
+                                                int countFiles = files.size();
+                                                String[] zipFileList = new String[countFiles];
+
+                                                for (int i = 0; i < files.size(); i++) {
+                                                    zipFileList[i] = files.get(i).getAbsolutePath();
+                                                }
+
+                                                String zip = file.getAbsolutePath() + DOWNLOAD;
+                                                Compress c = new Compress(zipFileList, zip);
+                                                c.zip();
+                                                File zipFile = new File(zip);
+                                                FileInputStream fileInputStream = new FileInputStream(zipFile.getAbsolutePath());
+                                                outputStream.write((httpVersion + " 200" + "\r\n").getBytes());
+                                                outputStream.write(("Content type: " + contentType(zipFile.getAbsolutePath()) + "\r\n").getBytes());
+                                                outputStream.write(("Content length: " + zipFile.length() + "\r\n").getBytes());
+                                                outputStream.write(("\r\n").getBytes());
+                                                sendBytes(fileInputStream, outputStream);
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    response = getDirectoryList(file);
+                                    //response = fileURL + "\nIt is a directory, You are not allowed!";
+                                    outputStream.write((httpVersion + " 200" + "\r\n").getBytes());
+                                    outputStream.write(("Content type: text/html" + "\r\n").getBytes());
+                                    outputStream.write(("Content length: " + response.length() + "\r\n").getBytes());
+                                    outputStream.write(("\r\n").getBytes());
+                                    outputStream.write((response + "\r\n").getBytes());
+                                }
                             }
                         } else {
                             response = "404 File Not Found";
@@ -303,4 +339,31 @@ public class HttpResponse extends Thread {
         os.write(imageData, 0, imageData.length);
     }
 
+    public void zip(String[] _files, String zipFileName) {
+        try {
+            BufferedInputStream origin;
+            FileOutputStream dest = new FileOutputStream(zipFileName);
+            ZipOutputStream out = new ZipOutputStream(new BufferedOutputStream(dest));
+            byte data[] = new byte[BUFFER];
+
+            for (String _file : _files) {
+                Log.v("Compress", "Adding: " + _file);
+                FileInputStream fi = new FileInputStream(_file);
+                origin = new BufferedInputStream(fi, BUFFER);
+
+                ZipEntry entry = new ZipEntry(_file.substring(_file.lastIndexOf("/") + 1));
+                out.putNextEntry(entry);
+                int count;
+
+                while ((count = origin.read(data, 0, BUFFER)) != -1) {
+                    out.write(data, 0, count);
+                }
+                origin.close();
+            }
+
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
