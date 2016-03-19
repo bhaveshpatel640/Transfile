@@ -203,23 +203,26 @@ function loadFiles(dirPath) {
             var innerDiv = "";
             for (i = 1; i < files.length; i++) {
                 var file = files[i];
-                var file_name;
+                var file_name,download;
                 var size, extension;
                 if (file.fileType == 1) {
                     size = pharseFileSize(file.size);
                     extension = file.extension;
                     file_name = '<td width="400px" style="padding-left: 20px;">' + file.showName + '</td>';
+                    download ='<td class="text-center" width="100px"><a href=\'' + file.path + '\' download><i class="fa fa-download fa-large"></i></a></td>';
                 } else {
                     size = "";
                     extension = "FOLDER";
-                    file_name = '<td width="400px" style="padding-left: 20px;"><a onclick="loadFiles("' + file.path + '")">' + file.showName + '</a></td>';
+                    file_name = '<td width="400px" style="padding-left: 20px;"><a onclick="loadFiles(\'' + file.path + '\')">' + file.showName + '</a></td>';
+                    download = '<td class="text-center" width="100px"><a href=\'' + file.path + '?download=zip\' download><i class="fa fa-download fa-large"></i></a></td>';
                 }
                 
                 innerDiv += '<tr>' + file_name +
                     '<td class="text-center" width="100px">' + extension + '</td>' +
                     '<td class="text-center" width="100px">' + size + '</td>' +
                     '<td class="text-center" width="250px">' + timeConverter(file.modifyTime) + '</td>' +
-                    '<td class="text-center" width="100px"><i class="fa fa-download fa-large"></i></td></tr>';
+                    download +
+                    '</tr>';
 
             }
             document.getElementById("directoryList").innerHTML = innerDirectoryPath;

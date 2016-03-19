@@ -65,9 +65,9 @@ public class HTTPService extends Service {
         mBuilder.setContentTitle(getString(R.string.log_running));
         mBuilder.setContentText(text);
         mBuilder.setOngoing(true);
-        Intent resultIntent = new Intent(this, MainActivity.class);
-        PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        mBuilder.setContentIntent(resultPendingIntent);
+        //  Intent resultIntent = new Intent(this, MainActivity.class);
+        //PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        // mBuilder.setContentIntent(resultPendingIntent);
         mNotifyMgr.notify(NOTIFICATION_STARTED_ID, mBuilder.build());
     }
 }
