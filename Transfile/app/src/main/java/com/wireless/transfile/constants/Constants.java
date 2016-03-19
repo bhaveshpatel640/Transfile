@@ -21,6 +21,10 @@ public class Constants {
             /*Music*/
                     {
                             ".mp3", ".ogg", ".wav", ".acc"
+                    },
+            /*Documents*/
+                    {
+                            ".doc", ".docx", ".pdf", ".pages", ".pub", ".epub", ".xps", ".odt", ".dotx", ".dot", ".ppt", ".vcard", ".dox"
                     }
             };
 

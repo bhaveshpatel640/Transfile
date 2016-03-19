@@ -67,19 +67,16 @@ public class JsonInfo {
         systemInfo.put("MusicSize", size);
 
         /*Scan all Documents*/
-/*
-        List<File> documentFileList = getListFiles(Environment.getExternalStorageDirectory(), 0);
+
+        List<File> documentFileList = getListFiles(Environment.getExternalStorageDirectory(), 3);
         count = documentFileList.size();
         size = 0L;
-        temp = count;
-        while (temp >= 0) {
-            File f = new File(documentFileList.get(temp).getAbsolutePath());
-            size += f.length();
-            temp--;
+        for (temp = 0; temp < count; temp++) {
+            size += documentFileList.get(temp).length();
         }
         systemInfo.put("Documents", count);
         systemInfo.put("DocumentSize", size);
-*/
+
         systemInfo.put("Wifi", Utility.getWifiStatus(context));
         systemInfo.put("ChargingStatus", Utility.getBatteryStatus(context));
         return systemInfo.toString();

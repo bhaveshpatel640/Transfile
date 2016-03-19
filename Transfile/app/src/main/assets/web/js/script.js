@@ -22,9 +22,9 @@ function loadSystemInfo() {
             document.getElementById("total_memory").innerHTML = pharseFileSize(info.PhoneMemorySize);
 
             document.getElementById("progress_meter").style.width = ((info.PhoneMemorySize - info.PhoneMemoryLeft) / info.PhoneMemorySize) * 100 + "%";
-            /*
-            document.getElementById("file_count").innerHTML = info.DeviceModel;
-            document.getElementById("file_size").innerHTML = info.DeviceModel;*/
+            
+            document.getElementById("file_count").innerHTML = info.Documents;
+            document.getElementById("file_size").innerHTML = info.DocumentSize;
 
             //            alert(xhttp.responseText);
         } else {
@@ -187,43 +187,59 @@ function loadFiles(dirPath) {
     xhttp.onreadystatechange = function () {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
             var files = JSON.parse(xhttp.responseText);
-            var i, innerDirectoryPath;
+            var i, innerDirectoryPath = "";
 
             var directoryList = files[0].directoryPath;
-            var temp = new Array();
-            temp = directoryList.split("/");
+            var res = directoryList.split("/");
+            var split = "/";
+            var folder;
+            for (var i = 0; i < res.length; i++) {
+                split += res[i];
 
-            for (i = 0; i < temp.length; i++) {
-                innerDirectoryPath += '<span class="text-center">' + temp[0] + '</span>';
-                if (i < temp.length - 1) {
-                    innerDirectoryPath += '/';
+                if (res[i] == "") {
+                    folder = 'root';
+                } else {
+                    folder = res[i];
                 }
+
+                if (i != 0) {
+                    split += "/";
+                    innerDirectoryPath += '<a onclick="loadFiles(\'' + split + '\')">' + folder + "</a>";
+                } else {
+                    //                    innerDirectoryPath += '<a>' + folder + '</a>';
+                }
+                if (i < res.length - 1)
+                    innerDirectoryPath += "<span style='padding-left:4px;padding-right:4px;'>/</span>";
             }
 
             var innerDiv = "";
-            for (i = 1; i < files.length; i++) {
-                var file = files[i];
-                var file_name,download;
-                var size, extension;
-                if (file.fileType == 1) {
-                    size = pharseFileSize(file.size);
-                    extension = file.extension;
-                    file_name = '<td width="400px" style="padding-left: 20px;">' + file.showName + '</td>';
-                    download ='<td class="text-center" width="100px"><a href=\'' + file.path + '\' download><i class="fa fa-download fa-large"></i></a></td>';
-                } else {
-                    size = "";
-                    extension = "FOLDER";
-                    file_name = '<td width="400px" style="padding-left: 20px;"><a onclick="loadFiles(\'' + file.path + '\')">' + file.showName + '</a></td>';
-                    download = '<td class="text-center" width="100px"><a href=\'' + file.path + '?download=zip\' download><i class="fa fa-download fa-large"></i></a></td>';
-                }
-                
-                innerDiv += '<tr>' + file_name +
-                    '<td class="text-center" width="100px">' + extension + '</td>' +
-                    '<td class="text-center" width="100px">' + size + '</td>' +
-                    '<td class="text-center" width="250px">' + timeConverter(file.modifyTime) + '</td>' +
-                    download +
-                    '</tr>';
+            if (files.length > 1) {
+                for (i = 1; i < files.length; i++) {
+                    var file = files[i];
+                    var file_name, download;
+                    var size, extension;
+                    if (file.fileType == 1) {
+                        size = pharseFileSize(file.size);
+                        extension = file.extension;
+                        file_name = '<td width="400px" style="padding-left: 20px;">' + file.showName + '</td>';
+                        download = '<td class="text-center" width="100px"><a href=\'' + file.path + '\' download><i class="fa fa-download fa-large"></i></a></td>';
+                    } else {
+                        size = "";
+                        extension = "FOLDER";
+                        file_name = '<td width="400px" style="padding-left: 20px;"><a onclick="loadFiles(\'' + file.path + '\')">' + file.showName + '</a></td>';
+                        download = '<td class="text-center" width="100px"><a href=\'' + file.path + '?download=zip\'><i class="fa fa-download fa-large"></i></a></td>';
+                    }
 
+                    innerDiv += '<tr>' + file_name +
+                        '<td class="text-center" width="100px">' + extension + '</td>' +
+                        '<td class="text-center" width="100px">' + size + '</td>' +
+                        '<td class="text-center" width="250px">' + timeConverter(file.modifyTime) + '</td>' +
+                        download +
+                        '</tr>';
+
+                }
+            } else {
+                innerDiv = "<span class='text-center' padding-left=200>No files</span>";
             }
             document.getElementById("directoryList").innerHTML = innerDirectoryPath;
             document.getElementById("files_list").innerHTML = innerDiv;
