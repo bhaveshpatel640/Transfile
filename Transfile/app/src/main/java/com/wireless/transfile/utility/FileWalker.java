@@ -42,9 +42,11 @@ public class FileWalker {
     public static List<File> getDirectoryFiles(File parentDir) {
         ArrayList<File> inFiles = new ArrayList<File>();
         File[] files = parentDir.listFiles();
-        for (File file : files) {
-            inFiles.add(file);
-            Log.i("file:", file.getName());
+        if (files != null) {
+            for (File file : files) {
+                inFiles.add(file);
+                Log.i("file:", file.getName());
+            }
         }
         return inFiles;
     }

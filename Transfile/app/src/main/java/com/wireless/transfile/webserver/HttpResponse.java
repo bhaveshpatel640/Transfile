@@ -48,7 +48,7 @@ public class HttpResponse extends Thread {
     Context context;
     String DOWNLOAD = "/download.zip";
     NotificationManager notificationManager;
-    private static final int THUMBNAILSIZE = 168;
+    private static final int THUMBNAIL_SIZE = 168;
     // private static final String HTTP_DATE_FORMAT = "EEE, dd MMM yyyy HH:mm:ss z";
     // private DateFormat mHttpDate = new SimpleDateFormat(HTTP_DATE_FORMAT, Locale.US);
 
@@ -81,7 +81,7 @@ public class HttpResponse extends Thread {
 
             firstLine = bufferedReader.readLine();
             //   secondLine = bufferedReader.readLine();
-
+            Log.i("firstLine", "abc   " + firstLine + "   abc");
             int first = firstLine.indexOf(" ");
             int end = firstLine.lastIndexOf(" ");
             method = firstLine.substring(0, first);
@@ -194,11 +194,11 @@ public class HttpResponse extends Thread {
                                                 Log.i("Width", key);
                                                 width = Integer.parseInt(key);
                                             } else
-                                                width = THUMBNAILSIZE;
+                                                width = THUMBNAIL_SIZE;
                                         } else
-                                            width = THUMBNAILSIZE;
+                                            width = THUMBNAIL_SIZE;
                                     } else {
-                                        width = THUMBNAILSIZE;
+                                        width = THUMBNAIL_SIZE;
                                     }
                                     outputStream.write((httpVersion + " 200" + "\r\n").getBytes());
                                     outputStream.write(("Content type: " + contentType(file.getName()) + "\r\n").getBytes());
@@ -230,26 +230,26 @@ public class HttpResponse extends Thread {
                                         if (list != null && !list.isEmpty()) {
                                             String download = list.get(0);
                                             if (download.equals("zip")) {
-                                                if(file.canWrite()){
-                                                List<File> files = getDirectoryFiles(file);
-                                                int countFiles = files.size();
-                                                String[] zipFileList = new String[countFiles];
+                                                //File[] files = file.listFiles();
 
-                                                for (int i = 0; i < files.size(); i++) {
-                                                    zipFileList[i] = files.get(i).getAbsolutePath();
-                                                }
-
+                                                //Log.i("zip", "File : " + file.getName() + "Count : " + files.length);
+                                                //String[] zipFileList = new String[files.length];
+                                                //for (int i = 0; i < files.length; i++) {
+                                                //  zipFileList[i] = files[i].getAbsolutePath();
+                                                //Log.i("zip", "File : " + files[i].getName());
+                                                //}
                                                 String zip = file.getAbsolutePath() + DOWNLOAD;
-                                                Compress c = new Compress(zipFileList, zip);
-                                                c.zip();
                                                 File zipFile = new File(zip);
+                                                zipFile.createNewFile();
+                                                new Compress(file.getAbsolutePath(), zipFile.getAbsolutePath());
+
+                                                Log.i("zipFile", "Length : " + zipFile.length());
                                                 FileInputStream fileInputStream = new FileInputStream(zipFile.getAbsolutePath());
                                                 outputStream.write((httpVersion + " 200" + "\r\n").getBytes());
                                                 outputStream.write(("Content type: " + contentType(zipFile.getAbsolutePath()) + "\r\n").getBytes());
                                                 outputStream.write(("Content length: " + zipFile.length() + "\r\n").getBytes());
                                                 outputStream.write(("\r\n").getBytes());
                                                 sendBytes(fileInputStream, outputStream);
-                                            }
                                             }
                                         }
                                     }
@@ -284,6 +284,7 @@ public class HttpResponse extends Thread {
         }
 
     }
+
 
     public static Map<String, List<String>> getQueryParams(String url) {
         try {
