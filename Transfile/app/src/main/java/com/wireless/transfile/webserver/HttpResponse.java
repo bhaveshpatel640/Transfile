@@ -1,6 +1,5 @@
 package com.wireless.transfile.webserver;
 
-import android.app.Dialog;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -8,14 +7,9 @@ import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.wireless.transfile.R;
 import com.wireless.transfile.app.AppLog;
 import com.wireless.transfile.utility.Compress;
-import com.wireless.transfile.utility.Utility;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -39,8 +33,6 @@ import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import static com.wireless.transfile.app.AppSettings.setPortNumber;
-import static com.wireless.transfile.app.AppSettings.setrequest;
 import static com.wireless.transfile.utility.FileWalker.getDirectoryFiles;
 import static com.wireless.transfile.utility.JsonInfo.getDirectoryList;
 import static com.wireless.transfile.utility.JsonInfo.getMusicList;
@@ -238,6 +230,7 @@ public class HttpResponse extends Thread {
                                         if (list != null && !list.isEmpty()) {
                                             String download = list.get(0);
                                             if (download.equals("zip")) {
+                                                if(file.canWrite()){
                                                 List<File> files = getDirectoryFiles(file);
                                                 int countFiles = files.size();
                                                 String[] zipFileList = new String[countFiles];
@@ -256,6 +249,7 @@ public class HttpResponse extends Thread {
                                                 outputStream.write(("Content length: " + zipFile.length() + "\r\n").getBytes());
                                                 outputStream.write(("\r\n").getBytes());
                                                 sendBytes(fileInputStream, outputStream);
+                                            }
                                             }
                                         }
                                     }
