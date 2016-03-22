@@ -17,21 +17,23 @@ public class FileWalker {
     public static List<File> getListFiles(File parentDir, int type) {
         ArrayList<File> inFiles = new ArrayList<File>();
         File[] files = parentDir.listFiles();
-        for (File file : files) {
-            if (file.isDirectory()) {
-                if (!file.isHidden()) {
-                    if (!file.getPath().equals(Environment.getExternalStorageDirectory().toString() + "/Android")) {
-                        File f = new File(file.getAbsolutePath() + "/.nomedia");
-                        if (!f.exists()) {
-                            inFiles.addAll(getListFiles(file, type));
+        if (files != null) {
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    if (!file.isHidden()) {
+                        if (!file.getPath().equals(Environment.getExternalStorageDirectory().toString() + "/Android")) {
+                            File f = new File(file.getAbsolutePath() + "/.nomedia");
+                            if (!f.exists()) {
+                                inFiles.addAll(getListFiles(file, type));
+                            }
                         }
                     }
-                }
-            } else {
-                String ext = getExtension(file.getName());
-                if (ext != "" && Arrays.asList(Constants.EXTENSIONS[type]).contains(ext)) {
-                    inFiles.add(file);
-                    Log.i("file:", file.getName());
+                } else {
+                    String ext = getExtension(file.getName());
+                    if (ext != "" && Arrays.asList(Constants.EXTENSIONS[type]).contains(ext)) {
+                        inFiles.add(file);
+                        Log.i("file:", file.getName());
+                    }
                 }
             }
         }

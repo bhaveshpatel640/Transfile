@@ -9,16 +9,12 @@ import android.provider.MediaStore;
 import android.util.Log;
 
 import com.wireless.transfile.app.AppLog;
-import com.wireless.transfile.utility.Compress;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -30,10 +26,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
 
-import static com.wireless.transfile.utility.FileWalker.getDirectoryFiles;
 import static com.wireless.transfile.utility.JsonInfo.getDirectoryList;
 import static com.wireless.transfile.utility.JsonInfo.getMusicList;
 import static com.wireless.transfile.utility.JsonInfo.getPhotoList;
@@ -224,36 +217,7 @@ public class HttpResponse extends Thread {
                                     sendBytes(fileInputStream, outputStream);
                                 }
                             } else {
-                                if (query != null && query.containsKey("download")) {
-                                    if (query.get("download") != null && !query.get("download").isEmpty()) {
-                                        list = query.get("download");
-                                        if (list != null && !list.isEmpty()) {
-                                            String download = list.get(0);
-                                            if (download.equals("zip")) {
-                                                //File[] files = file.listFiles();
 
-                                                //Log.i("zip", "File : " + file.getName() + "Count : " + files.length);
-                                                //String[] zipFileList = new String[files.length];
-                                                //for (int i = 0; i < files.length; i++) {
-                                                //  zipFileList[i] = files[i].getAbsolutePath();
-                                                //Log.i("zip", "File : " + files[i].getName());
-                                                //}
-                                                String zip = file.getAbsolutePath() + DOWNLOAD;
-                                                File zipFile = new File(zip);
-                                                zipFile.createNewFile();
-                                                new Compress(file.getAbsolutePath(), zipFile.getAbsolutePath());
-
-                                                Log.i("zipFile", "Length : " + zipFile.length());
-                                                FileInputStream fileInputStream = new FileInputStream(zipFile.getAbsolutePath());
-                                                outputStream.write((httpVersion + " 200" + "\r\n").getBytes());
-                                                outputStream.write(("Content type: " + contentType(zipFile.getAbsolutePath()) + "\r\n").getBytes());
-                                                outputStream.write(("Content length: " + zipFile.length() + "\r\n").getBytes());
-                                                outputStream.write(("\r\n").getBytes());
-                                                sendBytes(fileInputStream, outputStream);
-                                            }
-                                        }
-                                    }
-                                } else {
                                     response = getDirectoryList(file);
                                     //response = fileURL + "\nIt is a directory, You are not allowed!";
                                     outputStream.write((httpVersion + " 200" + "\r\n").getBytes());
@@ -261,7 +225,7 @@ public class HttpResponse extends Thread {
                                     outputStream.write(("Content length: " + response.length() + "\r\n").getBytes());
                                     outputStream.write(("\r\n").getBytes());
                                     outputStream.write((response + "\r\n").getBytes());
-                                }
+
                             }
                         } else {
                             response = "404 File Not Found";
@@ -332,33 +296,5 @@ public class HttpResponse extends Thread {
         imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
         byte[] imageData = byteArrayOutputStream.toByteArray();
         os.write(imageData, 0, imageData.length);
-    }
-
-    public void zip(String[] _files, String zipFileName) {
-        try {
-            BufferedInputStream origin;
-            FileOutputStream dest = new FileOutputStream(zipFileName);
-            ZipOutputStream out = new ZipOutputStream(new BufferedOutputStream(dest));
-            byte data[] = new byte[BUFFER];
-
-            for (String _file : _files) {
-                Log.v("Compress", "Adding: " + _file);
-                FileInputStream fi = new FileInputStream(_file);
-                origin = new BufferedInputStream(fi, BUFFER);
-
-                ZipEntry entry = new ZipEntry(_file.substring(_file.lastIndexOf("/") + 1));
-                out.putNextEntry(entry);
-                int count;
-
-                while ((count = origin.read(data, 0, BUFFER)) != -1) {
-                    out.write(data, 0, count);
-                }
-                origin.close();
-            }
-
-            out.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

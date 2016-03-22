@@ -18,7 +18,9 @@
     <!-- Owl Carousel Assets -->
     <!-- Prettify -->
     <script src="web/jquery.mobile-1.4.5/jquery.mobile-1.4.5.js"></script>
-
+    <script>
+        var ap;
+    </script>
     <link rel="stylesheet" href="web/css/circle-menu.css">
     <link rel="stylesheet" href="web/css/common.css">
     <link rel="stylesheet" href="web/css/custom.css">
@@ -275,7 +277,7 @@
                         }
                     }
                 </script>
-<!--
+                <!--
                 <script>
                     $(document).ready(function () {
 
@@ -407,48 +409,11 @@
                 <div class="small-1 columns"></div>
             </div>
 
-
-            <script src="web/MusicPlayer/dist/APlayer.min.js"></script>
-            <!--
-            <script>
-                var ap = new APlayer({
-                    element: document.getElementById('player')
-                    , narrow: false
-                    , autoplay: false
-                    , showlrc: false
-                    , theme: '#ad7a86'
-                    , music: [
-                        {
-                            title: 'Preparation'
-                            , author: 'Hans Zimmer/Richard Harvey'
-                            , url: 'http://7xq131.com1.z0.glb.clouddn.com/Preparation.mp3'
-                            , pic: 'http://7xq131.com1.z0.glb.clouddn.com/Preparation.jpg'
-                }
-
-                        
-                        , {
-                            title: 'Preparation'
-                            , author: 'Hans Zimmer/Richard Harvey'
-                            , url: 'http://7xq131.com1.z0.glb.clouddn.com/Preparation.mp3'
-                            , pic: 'http://7xq131.com1.z0.glb.clouddn.com/Preparation.jpg'
-                }
-
-                        
-                        , {
-                            title: 'Preparation'
-                            , author: 'Hans Zimmer/Richard Harvey'
-                            , url: 'http://7xq131.com1.z0.glb.clouddn.com/Preparation.mp3'
-                            , pic: 'http://7xq131.com1.z0.glb.clouddn.com/Preparation.jpg'
-                }
-            ]
-                });
-                ap.init();
-            </script>
--->
         </div>
-        <script src="web/MusicPlayer/dist/APlayer.min.js"></script>
+        <script src="web/js/APlayer.min.js"></script>
         <script>
-            var ap = new APlayer({
+            ap=null;
+            ap = new APlayer({
                 element: document.getElementById('player')
                 , narrow: false
                 , autoplay: false
@@ -625,9 +590,9 @@
                 <div class="small-9 columns">
                     <div id="directoryList" class="small-12 columns" style="padding:8px;padding-left:25px; margin-top:6px;font-size:1.2em; ">
                         <span class="text-center">ABCD</span>/
-                        <span class="text-center">EFGH</span>/ 
-                        <span class="text-center">IJKL</span>/ 
-                        <span class="text-center">MNOP</span>/ 
+                        <span class="text-center">EFGH</span>/
+                        <span class="text-center">IJKL</span>/
+                        <span class="text-center">MNOP</span>/
                         <span class="text-center">QRST</span>
                     </div>
                     <table class="hover" style="margin-top:0%;  ">

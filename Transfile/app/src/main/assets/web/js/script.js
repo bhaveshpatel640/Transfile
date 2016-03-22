@@ -22,9 +22,9 @@ function loadSystemInfo() {
             document.getElementById("total_memory").innerHTML = pharseFileSize(info.PhoneMemorySize);
 
             document.getElementById("progress_meter").style.width = ((info.PhoneMemorySize - info.PhoneMemoryLeft) / info.PhoneMemorySize) * 100 + "%";
-            
+
             document.getElementById("file_count").innerHTML = info.Documents;
-            document.getElementById("file_size").innerHTML = info.DocumentSize;
+            document.getElementById("file_size").innerHTML = pharseFileSize(info.DocumentSize);
 
             //            alert(xhttp.responseText);
         } else {
@@ -227,7 +227,7 @@ function loadFiles(dirPath) {
                         size = "";
                         extension = "FOLDER";
                         file_name = '<td width="400px" style="padding-left: 20px;"><a onclick="loadFiles(\'' + file.path + '\')">' + file.showName + '</a></td>';
-                        download = '<td class="text-center" width="100px"><a href=\'' + file.path + '?download=zip\'><i class="fa fa-download fa-large"></i></a></td>';
+                        download = '<td class="text-center" width="100px">-</td>';
                     }
 
                     innerDiv += '<tr>' + file_name +
@@ -253,13 +253,11 @@ function loadFiles(dirPath) {
     xhttp.send();
 }
 
-
-function playmusic(musicTitle, musicAuthor, musicPath) {
-    document.getElementById('player').innerHTML = "";
-    var ap = new APlayer({
+function play(musicTitle, musicAuthor, musicPath) {
+    ap = new APlayer({
         element: document.getElementById('player')
         , narrow: false
-        , autoplay: false
+        , autoplay: true
         , showlrc: false
         , theme: '#ad7a86'
         , music: [
@@ -272,7 +270,10 @@ function playmusic(musicTitle, musicAuthor, musicPath) {
                             ]
     });
     ap.init();
-    ap.play();
+}
+
+function playmusic(musicTitle, musicAuthor, musicPath) {
+    play(musicTitle, musicAuthor, musicPath);
 }
 
 function msToTime(duration) {
