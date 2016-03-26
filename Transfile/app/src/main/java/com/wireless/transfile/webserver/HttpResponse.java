@@ -10,11 +10,13 @@ import android.util.Log;
 
 import com.wireless.transfile.app.AppLog;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -39,7 +41,6 @@ public class HttpResponse extends Thread {
     Socket socket;
     String header;
     Context context;
-    String DOWNLOAD = "/download.zip";
     NotificationManager notificationManager;
     private static final int THUMBNAIL_SIZE = 168;
     // private static final String HTTP_DATE_FORMAT = "EEE, dd MMM yyyy HH:mm:ss z";
@@ -73,8 +74,10 @@ public class HttpResponse extends Thread {
             String fileURL;
 
             firstLine = bufferedReader.readLine();
-            //   secondLine = bufferedReader.readLine();
-            Log.i("firstLine", "abc   " + firstLine + "   abc");
+            String secondLine = bufferedReader.readLine();
+            Log.i("firstLine", '\n' + firstLine + "\n");
+            Log.i("secondLine", '\n' + secondLine + "\n");
+
             int first = firstLine.indexOf(" ");
             int end = firstLine.lastIndexOf(" ");
             method = firstLine.substring(0, first);
@@ -83,10 +86,11 @@ public class HttpResponse extends Thread {
             int questionMarkIndex;
             requestUri = URLDecoder.decode(requestUri, "UTF-8");
 
-            if (requestUri.contains("?"))
+            if (requestUri.contains("?")) {
                 questionMarkIndex = requestUri.indexOf("?");
-            else
+            } else {
                 questionMarkIndex = -1;
+            }
             //  /storage/emulated/0/index.html?as
 
             if (questionMarkIndex != -1) {
@@ -94,8 +98,12 @@ public class HttpResponse extends Thread {
                 requestUri = requestUri.substring(questionMarkIndex + 1, requestUri.length());
                 query = getQueryParams("?" + requestUri);
                 Log.i(fileURL, requestUri);
-            } else
+            } else {
                 fileURL = requestUri;
+            }
+
+            Log.i("fileURL", fileURL + "\n");
+            Log.i("requestUri", requestUri + "\n");
 
             List<String> list = null;
             if (query != null && query.containsKey("Key")) {
@@ -134,6 +142,49 @@ public class HttpResponse extends Thread {
                 outputStream.write(("\r\n").getBytes());
                 outputStream.write((response + "\r\n").getBytes());
 
+            } else if (query != null && query.containsKey("Upload")) {
+                //Log.i("firstLine", firstLine + "\n");
+                //Log.i("secondLine", secondLine + "\n");
+                String fileName = "", filePath = "";
+                String inputLine;
+                while (!(inputLine = bufferedReader.readLine()).equals("")) {
+                    if (inputLine.startsWith("FileName")) {
+                        fileName = inputLine.substring(inputLine.indexOf(" ") + 1, inputLine.length());
+                    } else if (inputLine.startsWith("Path")) {
+                        filePath = inputLine.substring(inputLine.indexOf(" ") + 1, inputLine.length());
+                    }
+                    Log.i("header", inputLine);
+                }
+
+                Log.i("FileName", fileName);
+                Log.i("FilePath", filePath);
+                while (!(inputLine = bufferedReader.readLine()).equals("")) {
+                    Log.i("header 1", inputLine);
+                }
+
+                while (!(inputLine = bufferedReader.readLine()).equals("")) {
+                    Log.i("header 2", inputLine);
+                }
+
+                // Writing the file to disk
+                // Instantiating a new output stream object
+                FileOutputStream fos = new FileOutputStream(filePath + "/" + fileName);
+                BufferedOutputStream bos = new BufferedOutputStream(fos);
+                byte[] buffer = new byte[2 * BUFFER]; // 4k buffer, could be much larger
+
+                int len;
+                while ((len = bufferedReader.read()) != -1) {
+                    bos.write(buffer, 0, len);
+                }
+                Log.i("Upload", "Done");
+                //fos.close();
+                //////////////////////*/
+                response = "uploaded";
+                outputStream.write((httpVersion + " 200" + "\r\n").getBytes());
+                outputStream.write(("Content type: text/html" + "\r\n").getBytes());
+                outputStream.write(("Content length: " + response.length() + "\r\n").getBytes());
+                outputStream.write(("\r\n").getBytes());
+                outputStream.write((response + "\r\n").getBytes());
             } else {
                 if (fileURL.startsWith("/web") || fileURL.equals("/") || fileURL.equals("/index.html")) {
                     String openFile;
@@ -177,7 +228,6 @@ public class HttpResponse extends Thread {
                             if (!file.isDirectory()) {
                                 FileInputStream fileInputStream = new FileInputStream(file);
                                 int width;
-
                                 if (query != null && query.containsKey("Thumbnail")) {
                                     if (query.containsKey("Width")) {
                                         if (query.get("Width") != null && !query.get("Width").isEmpty()) {
@@ -217,14 +267,13 @@ public class HttpResponse extends Thread {
                                     sendBytes(fileInputStream, outputStream);
                                 }
                             } else {
-
-                                    response = getDirectoryList(file);
-                                    //response = fileURL + "\nIt is a directory, You are not allowed!";
-                                    outputStream.write((httpVersion + " 200" + "\r\n").getBytes());
-                                    outputStream.write(("Content type: text/html" + "\r\n").getBytes());
-                                    outputStream.write(("Content length: " + response.length() + "\r\n").getBytes());
-                                    outputStream.write(("\r\n").getBytes());
-                                    outputStream.write((response + "\r\n").getBytes());
+                                response = getDirectoryList(file);
+                                //response = fileURL + "\nIt is a directory, You are not allowed!";
+                                outputStream.write((httpVersion + " 200" + "\r\n").getBytes());
+                                outputStream.write(("Content type: text/html" + "\r\n").getBytes());
+                                outputStream.write(("Content length: " + response.length() + "\r\n").getBytes());
+                                outputStream.write(("\r\n").getBytes());
+                                outputStream.write((response + "\r\n").getBytes());
 
                             }
                         } else {
@@ -243,7 +292,11 @@ public class HttpResponse extends Thread {
             outputStream.flush();
             outputStream.close();
             socket.close();
-        } catch (Exception e) {
+        } catch (
+                Exception e
+                )
+
+        {
             e.printStackTrace();
         }
 
