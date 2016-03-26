@@ -1,0 +1,66 @@
+I'm developing an wireless file transfer app (HTTP Web Server), it contains a website with a form to upload file to the server i.e android app
+
+When I select a file of very less size header generated is as below.
+
+                POST /?Upload HTTP/1.1
+                Host: 192.168.0.101:4567
+                Connection: keep-alive
+                Content-Length: 2968
+                Pragma: no-cache
+                Cache-Control: no-cache
+                Origin: http://192.168.0.101:4567
+                User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36
+                Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryT0t2jgS72DnsVZRX
+                Accept: */*
+                DNT: 1
+                Referer: http://192.168.0.101:4567/
+                Accept-Encoding: gzip, deflate
+                Accept-Language: en-US,en;q=0.8
+
+
+And when I select a larger file then and error occurs as follow
+
+Console error : (index):637 Refused to set unsafe header "Content-length"
+
+Header generated
+
+                Provisional headers are shown
+                Content-Type:multipart/form-data; boundary=----WebKitFormBoundary0tFAb8kt90pwbuFO
+                Origin:http://192.168.0.101:4567
+                Referer:http://192.168.0.101:4567/
+                User-Agent:Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36
+
+
+Code : 
+
+                <form id="uploadForm" method="post" enctype="multipart/form-data">
+                    <input id="uploadPath" type="hidden" name="path">
+                    <button class="file-upload">
+                        <input id="fileUpload" onchange="uploadFile()" type="file" class="file-input">Upload
+                    </button>
+                </form>
+
+                <script>
+
+                function uploadFile() {        
+                    var form = document.getElementById('uploadForm');
+                    var path = form.elements.namedItem("path").value
+                    var file = document.getElementById('fileUpload').files[0];
+                    var formData = new FormData(form);
+
+                    formData.append('file', file);
+                    var http = new XMLHttpRequest();
+                    http.open("POST", '/?Upload', true);
+                    http.setRequestHeader("Content-length", file.size);
+                    http.onreadystatechange = function () { //Call a function when the state changes.
+                        if (http.readyState == 4 && http.status == 200) {
+                            alert(http.responseText);
+                        }
+                    }
+
+                    http.send(formData);
+                    form.reset();
+                    form.elements.namedItem("path").value = path;
+
+                }
+                </script>
