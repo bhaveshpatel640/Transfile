@@ -188,8 +188,9 @@ function loadFiles(dirPath) {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
             var files = JSON.parse(xhttp.responseText);
             var i, innerDirectoryPath = "";
-
             var directoryList = files[0].directoryPath;
+            
+            document.getElementById('uploadPath').value = directoryList;
             var res = directoryList.split("/");
             var split = "/";
             var folder;

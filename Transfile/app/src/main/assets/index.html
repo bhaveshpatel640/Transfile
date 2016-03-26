@@ -135,7 +135,7 @@
                 <div class="small-3 columns">
                     <div class="center-row">
                         <div class="small-12 columns">
-                            <ul class="inline-list center" style="display:none;">
+                            <ul class="inline-list center">
                                 <i class="fa fa-search fa-lg" style="color:#ff5722;position:relative;top:27px;left:10px;"></i>
 
                                 <form>
@@ -147,7 +147,7 @@
                                 </form>
                             </ul>
                         </div>
-                        <div class="small-12 columns" style="display:none;">
+                        <div class="small-12 columns">
                             <ul class="inline-list center">
                                 <button class="file-upload">
                                     <input type="file" class="file-input">Upload
@@ -325,11 +325,11 @@
             </div>
         </div>
 
-        <div id="music_page" style="display: none">
+        <div id="music_page">
             <div class="expanded row" style="margin-top:6.5%;">
                 <div class="small-4 columns">
                     <div class="center-row">
-                        <div class="small-12 columns" style="display:none;">
+                        <div class="small-12 columns">
                             <ul class="inline-list center">
                                 <i class="fa fa-search fa-lg" style="color:#ff5722;position:relative;top:27px;left:10px;"></i>
 
@@ -342,7 +342,7 @@
                                 </form>
                             </ul>
                         </div>
-                        <div class="small-12 columns" style="display:none;">
+                        <div class="small-12 columns">
                             <ul class="inline-list center">
                                 <button class="file-upload">
                                     <input type="file" class="file-input">Upload
@@ -412,7 +412,7 @@
         </div>
         <script src="web/js/APlayer.min.js"></script>
         <script>
-            ap=null;
+            ap = null;
             ap = new APlayer({
                 element: document.getElementById('player')
                 , narrow: false
@@ -423,11 +423,11 @@
             });
             ap.init();
         </script>
-        <div id="video_page" style="display: none">
+        <div id="video_page">
             <div class="expanded row" style="margin-top:6.5%;margin-left:4%;">
                 <div class="small-3 columns">
                     <div class="center-row">
-                        <!--
+
                         <div class="small-12 columns">
                             <ul class="inline-list center">
                                 <i class="fa fa-search fa-lg" style="color:#ff5722;position:relative;top:27px;left:10px;"></i>
@@ -447,7 +447,7 @@
                                 </button>
                             </ul>
                         </div>
--->
+
 
                         <!--
                         <div class="small-12 columns">
@@ -560,29 +560,29 @@
                 }
             }
         </script>
-
         <div id="documents_page" style="display: none">
             <div class=" expanded row" style="margin-top:6.5%; margin-left:4%;">
                 <div class="small-3 columns">
                     <div class="center-row">
-                        <div class="small-12 columns" style="display:none;">
+                        <div class="small-12 columns">
                             <ul class="inline-list center">
                                 <i class="fa fa-search fa-lg" style="color:#ff5722;position:relative;top:27px;left:10px;"></i>
 
-                                <form>
-                                    <div class="row collapse">
-                                        <div class="small-12 columns">
-                                            <input type="text" class="dream-search" placeholder="Search">
-                                        </div>
+                                <div class="row collapse">
+                                    <div class="small-12 columns">
+                                        <input type="text" class="dream-search" placeholder="Search">
                                     </div>
-                                </form>
+                                </div>
                             </ul>
                         </div>
-                        <div class="small-12 columns" style="display:none;">
+                        <div class="small-12 columns">
                             <ul class="inline-list center">
-                                <button class="file-upload">
-                                    <input type="file" class="file-input">Upload
-                                </button>
+                                <form id="uploadForm" method="post" enctype="multipart/form-data">
+                                    <input id="uploadPath" type="hidden" name="path">
+                                    <button class="file-upload">
+                                        <input id="fileUpload" onchange="uploadFile()" type="file" class="file-input">Upload
+                                    </button>
+                                </form>
                             </ul>
                         </div>
                     </div>
@@ -621,8 +621,34 @@
             </div>
         </div>
     </div>
+    <script>
+        function uploadFile() {
+            var form = document.getElementById('uploadForm');
+            var path = form.elements.namedItem("path").value
+            var file = document.getElementById('fileUpload').files[0];
+            var formData = new FormData(form);
+            formData.append('file', file);
 
+            var http = new XMLHttpRequest();
+            http.open("POST", '/?Upload', true);
 
+            //Send the proper header information along with the request
+            //            http.setRequestHeader("Content-type", "multipart/form-data");
+            //http.setRequestHeader("Content-length", file.size);
+            http.setRequestHeader("FileName",file.name);
+            http.setRequestHeader("Path",path);
+            http.timeout = 40000; // Set timeout to 4 seconds (4000 milliseconds)
+
+            http.onreadystatechange = function () { //Call a function when the state changes.
+                if (http.readyState == 4 && http.status == 200) {
+                    alert(http.responseText);
+                }
+            }
+            http.send(formData);
+            form.reset();
+            form.elements.namedItem("path").value = path;
+        }
+    </script>
     <nav id="c-circle-nav" class="c-circle-nav">
         <button id="c-circle-nav__toggle" class="c-circle-nav__toggle">
             <span>Toggle</span>

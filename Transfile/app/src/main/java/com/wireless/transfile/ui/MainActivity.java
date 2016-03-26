@@ -26,7 +26,6 @@ import com.wireless.transfile.utility.Utility;
 
 import static com.wireless.transfile.app.AppSettings.getPortNumber;
 import static com.wireless.transfile.app.AppSettings.setPortNumber;
-import static com.wireless.transfile.app.AppSettings.setrequest;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -55,7 +54,6 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        setrequest(this, false);
         dialog = new Dialog(this);
         dialog.setTitle("Select connectivity");
         dialog.setContentView(R.layout.dialog_wifi_hotspot);

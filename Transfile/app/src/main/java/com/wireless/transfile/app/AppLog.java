@@ -12,14 +12,14 @@ public class AppLog {
         if (Constants.LOG_DEBUG)
             Log.i(LOG, message);
     }
-
-    public static void logString(String message, String tag) {
-        if (Constants.LOG_DEBUG)
-            Log.i(tag, message);
-    }
-
-    public static void logWarningString(String message) {
-        if (Constants.LOG_DEBUG)
-            Log.i(WARNING, message);
-    }
+//
+//    public static void logString(String message, String tag) {
+//        if (Constants.LOG_DEBUG)
+//            Log.i(tag, message);
+//    }
+//
+//    public static void logWarningString(String message) {
+//        if (Constants.LOG_DEBUG)
+//            Log.i(WARNING, message);
+//    }
 }
