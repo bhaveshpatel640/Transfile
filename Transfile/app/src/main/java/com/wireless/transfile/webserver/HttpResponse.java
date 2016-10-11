@@ -1,5 +1,6 @@
 package com.wireless.transfile.webserver;
 
+import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -10,7 +11,6 @@ import android.util.Log;
 
 import com.wireless.transfile.app.AppLog;
 
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -29,6 +29,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.wireless.transfile.app.AppSettings.getClientIp;
+import static com.wireless.transfile.app.AppSettings.setClientIp;
 import static com.wireless.transfile.utility.JsonInfo.getDirectoryList;
 import static com.wireless.transfile.utility.JsonInfo.getMusicList;
 import static com.wireless.transfile.utility.JsonInfo.getPhotoList;
@@ -37,7 +39,7 @@ import static com.wireless.transfile.utility.JsonInfo.getVideoList;
 import static com.wireless.transfile.utility.MimeTypes.contentType;
 
 public class HttpResponse extends Thread {
-    private static final int BUFFER = 1024;
+    //private static final int BUFFER = 1024;
     Socket socket;
     String header;
     Context context;
@@ -57,33 +59,60 @@ public class HttpResponse extends Thread {
     public synchronized void run() {
         BufferedReader bufferedReader;
         String firstLine;
-        // String secondLine;
+        String secondLine;
         String response;
-
+        String host;
         String method;
         String httpVersion;
         String requestUri;
         OutputStream outputStream;
+        InputStream inputStream;
         Map<String, List<String>> query = null;
-
+        boolean flag = false;
+        String key = "";
+        String fileURL;
+        int questionMarkIndex;
         try {
             outputStream = socket.getOutputStream();
-            bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            boolean flag = false;
-            String key = "";
-            String fileURL;
+            inputStream = socket.getInputStream();
+            String line = "";
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+            bufferedReader = new BufferedReader(inputStreamReader);
+            //String[] header = new String[1000];
+            int h = 0;
+ /*
 
+            int bytesRead = 0;
+
+            while (inputStream.available() > 0) {
+                try {
+                    int t = inputStream.read();
+                    char ch = (char) t;
+                    if (ch == '\n') {
+                        //  header[h++] = line;
+                        Log.i("line",line);
+                        //   if (line.startsWith("------WebKitFormBoundary"))
+                        //     break;
+                        line="";
+                    } else {
+                        line += ch;
+                    }
+                } catch (IOException e) {
+                }
+            }
+
+*/
             firstLine = bufferedReader.readLine();
-            String secondLine = bufferedReader.readLine();
-            Log.i("firstLine", '\n' + firstLine + "\n");
-            Log.i("secondLine", '\n' + secondLine + "\n");
+            secondLine = bufferedReader.readLine();
 
+            Log.i("firstLine", firstLine + "\n");
+            Log.i("secondLine", secondLine + "\n");
             int first = firstLine.indexOf(" ");
             int end = firstLine.lastIndexOf(" ");
+
             method = firstLine.substring(0, first);
             httpVersion = firstLine.substring(end + 1, firstLine.length());
             requestUri = firstLine.substring(first + 1, end);
-            int questionMarkIndex;
             requestUri = URLDecoder.decode(requestUri, "UTF-8");
 
             if (requestUri.contains("?")) {
@@ -91,13 +120,12 @@ public class HttpResponse extends Thread {
             } else {
                 questionMarkIndex = -1;
             }
-            //  /storage/emulated/0/index.html?as
 
             if (questionMarkIndex != -1) {
                 fileURL = requestUri.substring(0, questionMarkIndex);
                 requestUri = requestUri.substring(questionMarkIndex + 1, requestUri.length());
                 query = getQueryParams("?" + requestUri);
-                Log.i(fileURL, requestUri);
+                // Log.i(fileURL, requestUri);
             } else {
                 fileURL = requestUri;
             }
@@ -157,27 +185,51 @@ public class HttpResponse extends Thread {
                 }
 
                 Log.i("FileName", fileName);
-                Log.i("FilePath", filePath);
+                Log.i("FilePath", filePath);/*
                 while (!(inputLine = bufferedReader.readLine()).equals("")) {
                     Log.i("header 1", inputLine);
                 }
 
                 while (!(inputLine = bufferedReader.readLine()).equals("")) {
                     Log.i("header 2", inputLine);
-                }
+                }*/
 
                 // Writing the file to disk
                 // Instantiating a new output stream object
                 FileOutputStream fos = new FileOutputStream(filePath + "/" + fileName);
-                BufferedOutputStream bos = new BufferedOutputStream(fos);
-                byte[] buffer = new byte[2 * BUFFER]; // 4k buffer, could be much larger
-
-                int len;
-                while ((len = bufferedReader.read()) != -1) {
-                    bos.write(buffer, 0, len);
+              /*  while ((bytesRead = extraInputStream.read(contents)) != -1)
+                    fos.write(contents, 0, bytesRead);*/
+                int t;
+                while ((t = inputStreamReader.read()) != -1) {
+                    try {
+                        char ch = (char) t;
+                        fos.write(ch);
+                        if (ch == '\n') {
+                            //  header[h++] = line;
+                            Log.i("line", line);
+                            //   if (line.startsWith("------WebKitFormBoundary"))
+                            //     break;
+                            line = "";
+                        } else {
+                            line += ch;
+                        }
+                    } catch (IOException e) {
+                    }
                 }
+/*
+                String s = bufferedReader.readLine();
+                boolean flag_1 = true;
+                while (s != null && flag_1) {
+                    // Log.i("file", s);
+                    fos.write((s + "\r\n").getBytes("windows-1252"));
+                    s = bufferedReader.readLine();
+                    if (s.contains("------WebKitFormBoundary")) {
+                        flag_1 = false;
+                    }
+                }
+
+                fos.close();*/
                 Log.i("Upload", "Done");
-                //fos.close();
                 //////////////////////*/
                 response = "uploaded";
                 outputStream.write((httpVersion + " 200" + "\r\n").getBytes());
@@ -194,18 +246,18 @@ public class HttpResponse extends Thread {
                         openFile = fileURL.substring(1, fileURL.length());
                     }
 
-                    InputStream inputStream;
+                    InputStream stream;
                     try {
-                        inputStream = context.getAssets().open(openFile);
+                        stream = context.getAssets().open(openFile);
                         AppLog.logString("Loading File Done");
-                        if (inputStream != null) {
+                        if (stream != null) {
                             try {
                                 outputStream.write((httpVersion + " 200" + "\r\n").getBytes());
                                 outputStream.write(("Content type: " + contentType(openFile) + "\r\n").getBytes());
                                 outputStream.write(("\r\n").getBytes());
                                 byte[] buffer = new byte[256];
                                 int bytesRead;
-                                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                                while ((bytesRead = stream.read(buffer)) != -1) {
                                     outputStream.write(buffer, 0, bytesRead);
                                 }
 
@@ -292,11 +344,7 @@ public class HttpResponse extends Thread {
             outputStream.flush();
             outputStream.close();
             socket.close();
-        } catch (
-                Exception e
-                )
-
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

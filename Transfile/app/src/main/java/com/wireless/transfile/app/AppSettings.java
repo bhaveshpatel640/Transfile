@@ -31,4 +31,16 @@ public class AppSettings {
         editor.putInt(Constants.PREF_SERVER_PORT, port);
         editor.apply();
     }
+
+    public static boolean getClientIp(Context context) {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getBoolean(Constants.ACCEPT_REQUEST, Constants.DEFAULT_ACCEPT_REQUEST);
+    }
+
+    public static void setClientIp(Context context, boolean accept) {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean(Constants.ACCEPT_REQUEST, accept);
+        editor.apply();
+    }
 }

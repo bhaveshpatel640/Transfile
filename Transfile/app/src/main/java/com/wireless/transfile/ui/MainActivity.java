@@ -25,16 +25,15 @@ import com.wireless.transfile.service.HTTPService;
 import com.wireless.transfile.utility.Utility;
 
 import static com.wireless.transfile.app.AppSettings.getPortNumber;
+import static com.wireless.transfile.app.AppSettings.setClientIp;
 import static com.wireless.transfile.app.AppSettings.setPortNumber;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private static final int NOTIFICATION_STARTED_ID = 5;
-
     Button startStopButton;
     TextView ipAddress;
     ImageView imageView;
-    //Boolean buttonFlag = false;
     Dialog changePortDialog;
     Dialog howToDialog;
     Dialog dialog;
@@ -62,6 +61,8 @@ public class MainActivity extends AppCompatActivity
         imageView = (ImageView) findViewById(R.id.active_inactive_image);
         imageView.setImageResource(R.drawable.transfile_inactive);
         AppSettings.setServiceStarted(MainActivity.this, false);
+        setClientIp(MainActivity.this, false);
+
         //Check whether service is started or not.
         boolean isRunning = AppSettings.isServiceStarted(this);
         //Getting references of views....
@@ -86,6 +87,7 @@ public class MainActivity extends AppCompatActivity
                         if (AppSettings.isServiceStarted(MainActivity.this)) {
                             stopService(intent);
                             AppSettings.setServiceStarted(MainActivity.this, false);
+                            setClientIp(MainActivity.this, false);
                             setButtonText(false);
                             setInfoText(false);
                             imageView.setImageResource(R.drawable.transfile_inactive);

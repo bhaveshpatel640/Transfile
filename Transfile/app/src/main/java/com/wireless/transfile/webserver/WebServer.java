@@ -2,17 +2,14 @@ package com.wireless.transfile.webserver;
 
 import android.app.NotificationManager;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Looper;
-import android.preference.PreferenceManager;
-
-import com.wireless.transfile.constants.Constants;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 import static com.wireless.transfile.app.AppSettings.getPortNumber;
+import static com.wireless.transfile.app.AppSettings.setClientIp;
 
 public class WebServer extends Thread {
     private Context context = null;
@@ -38,8 +35,10 @@ public class WebServer extends Thread {
 
             while (true) {
                 socket = httpServerSocket.accept();
+
                 HttpResponse httpResponse = new HttpResponse(socket, getContext(), getNotifyManager());
                 httpResponse.start();
+
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -54,6 +53,7 @@ public class WebServer extends Thread {
     public synchronized void stopThread() {
         try {
             httpServerSocket.close();
+            setClientIp(getContext(), false);
         } catch (IOException e) {
             e.printStackTrace();
         }
