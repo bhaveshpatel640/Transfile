@@ -11,3 +11,5 @@
   - User should enter the IP address of the server in his browser and start the file transfer using the website that will be opened.
 
 [ **Download App** ](https://github.com/bhaveshpatel640/Transfile/blob/master/APK/Transfile.apk?raw=true)
+
+[![Transfile Home Screenshort and download link](https://i.imgur.com/okHkMd7.png)](https://github.com/bhaveshpatel640/Transfile/blob/master/APK/Transfile.apk?raw=true)
